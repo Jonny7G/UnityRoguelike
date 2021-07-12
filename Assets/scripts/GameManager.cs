@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonBehaviour<GameManager>
 {
     public MapGenerator generator;
+    public EntitiesHandler entities;
 
     private void Start()
     {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     }
     private void LoadNewLevel()
     {
-        generator.GenerateMap();
+        var map = generator.GenerateMap();
+        entities.LoadEntities(map);
     }
 }

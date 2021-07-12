@@ -9,9 +9,12 @@ public class MapGenerator : MonoBehaviour
     {
         //called on scene load, this object will persist throughout the game so its only called once on game start
     }
-    public void GenerateMap()
+    public MapData GenerateMap()
     {
-        mapRndr.Render(GetMap());
+        var map = GetMap();
+        mapRndr.Render(map);
+
+        return map;
     }
     private MapData GetMap()
     {
