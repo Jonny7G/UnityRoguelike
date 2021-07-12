@@ -32,7 +32,7 @@ public class MapRenderer : MonoBehaviour
                 }
                 else
                 {
-                    walls.SetTile(new Vector3Int(x, y, 0), groundTile); //place ground tile on ground tilemap
+                    ground.SetTile(new Vector3Int(x, y, 0), groundTile); //place ground tile on ground tilemap
                 }
             }
         }
