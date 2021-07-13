@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    public Entity Player;
+    [HideInInspector]public Entity Player;
 
 }

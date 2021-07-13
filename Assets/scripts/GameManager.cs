@@ -6,7 +6,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     public MapGenerator generator;
     public EntitiesHandler entities;
-
+    public TurnHandler turnHandler;
     private void Start()
     {
         LoadNewLevel(); //on start to test behavior, eventually it would be something called upon the player reaching a level exit
@@ -15,5 +15,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         var map = generator.GenerateMap();
         entities.LoadEntities(map);
+        turnHandler.SetMap(map);
     }
 }

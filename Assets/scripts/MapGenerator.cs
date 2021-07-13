@@ -31,8 +31,10 @@ public class MapGenerator : MonoBehaviour
             { 0,0,1,0,1,1,1,1,0,0},
             { 0,0,1,1,1,1,1,1,0,0},
             { 0,0,0,0,1,0,0,0,0,0},
-            { 0,0,0,0,0,0,0,0,0,0}
+            { 1,0,0,0,0,0,0,0,0,0}
         };
+        data.entrance = new Vector2Int(1,2);
+        data.exit = new Vector2Int(3, 7);
         return data;
     }
 }
