@@ -5,7 +5,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public Vector2Int position { get; private set; }
-    [SerializeField] protected HealthHandler health;
+    
 
     public virtual void TakeTurn(TurnHandler turnHandler)
     {
@@ -26,6 +26,6 @@ public class Entity : MonoBehaviour
     public void SetPosition(Vector2Int pos)
     {
         this.position = pos;
-        transform.position = new Vector3(pos.x+0.5f, pos.y, 0);
+        transform.position = new Vector3(pos.x + 0.5f, pos.y, 0);
     }
 }

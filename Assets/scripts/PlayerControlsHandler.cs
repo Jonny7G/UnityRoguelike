@@ -28,7 +28,14 @@ public class PlayerControlsHandler : MonoBehaviour
         bool moved = move.magnitude > 0;
         if (moved)
         {
-            player.AttemptMove(turnHandler, player.position + move);
+            if(!player.AttemptMove(turnHandler, player.position + move))
+            {
+                var entity = turnHandler.entities.liveEntities.GetEntity(player.position + move);
+                if (entity != null)
+                {
+                    //entity.health.Damage();
+                }
+            }
             turnHandler.MoveTurn();
         }
     }

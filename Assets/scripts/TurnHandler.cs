@@ -12,16 +12,13 @@ public class TurnHandler : MonoBehaviour
     }
     public void MoveTurn()
     {
-        foreach (var entity in entities.allEntities)
-        {
-            entity.TakeTurn(this);
-        }
+        entities.MoveTurn(this);
     }
     public bool IsOpenTile(Vector2Int position)
     {
         if (position.x >= 0 && position.y >= 0 && position.x < map.tiles.GetLength(0) && position.y < map.tiles.GetLength(1))
         {
-            return map.tiles[position.x, position.y] == 1 && !entities.HasEntity(position);
+            return map.tiles[position.x, position.y] == 1 && !entities.liveEntities.HasEntity(position);
         }
         else
         {
