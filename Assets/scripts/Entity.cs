@@ -5,15 +5,15 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public Vector2Int position { get; private set; }
-    
+    public EntitiesHandler entHandler = null; //used when an entity creates entities or needs to determine its turn
 
-    public virtual void TakeTurn(TurnHandler turnHandler)
+    public virtual void TakeTurn()
     {
 
     }
-    public bool AttemptMove(TurnHandler turnHandler, Vector2Int position)
+    public bool AttemptMove(Vector2Int position)
     {
-        if (turnHandler.IsOpenTile(position))
+        if (entHandler.IsOpenTile(position))
         {
             SetPosition(position);
             return true;

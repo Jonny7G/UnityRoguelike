@@ -5,33 +5,48 @@ using UnityEngine;
 public class EntitiesHandler : MonoBehaviour
 {
     public LiveEntity player;
-    public EntityCollection<LiveEntity> liveEntities;
-    public EntityCollection<ItemPickup> Items;
+    public EntityCollection<LiveEntity> liveEntities = new EntityCollection<LiveEntity>();
+    public EntityCollection<ItemPickup> items = new EntityCollection<ItemPickup>();
 
     [SerializeField] private EntitySpawner spawner;
-
+    public MapData map;
+    public void MoveTurn()
+    {
+        liveEntities.TakeTurns();
+        items.TakeTurns();
+        Debug.Log("turn moved");
+    }
     public void LoadEntities(MapData map)
     {
-        liveEntities.LoadEntities(spawner.SpawnEntities(map, player));
-        liveEntities.AddEntity(player);
+        this.map = map;
         player.SetPosition(map.entrance);
+        liveEntities.AddEntity(player);
+        spawner.SpawnEntities(this);
         //need to subscribe to entity health ondeath event so we can remove it
     }
     public void RemoveEntities()
     {
         liveEntities.RemoveEntity(player);
         liveEntities.RemoveEntities();
-        Items.RemoveEntities();
+        items.RemoveEntities();
     }
-    public void MoveTurn(TurnHandler trnHandler)
+
+    public bool IsOpenTile(Vector2Int position)
     {
-        liveEntities.TakeTurns(trnHandler);
-        Items.TakeTurns(trnHandler);
+        if (position.x >= 0 && position.y >= 0 && position.x < map.tiles.GetLength(0) && position.y < map.tiles.GetLength(1))
+        {
+            return map.tiles[position.x, position.y] == 1 && !liveEntities.HasEntity(position);
+        }
+        else
+        {
+            return false;
+        }
     }
 }
+[System.Serializable]
 public class EntityCollection<T> where T : Entity
 {
-    public List<T> entities;
+    public List<T> entities = new List<T>();
 
     public void LoadEntities(List<T> entities)
     {
@@ -40,15 +55,21 @@ public class EntityCollection<T> where T : Entity
     public void AddEntity(T entity)
     {
         entities.Add(entity);
-    }public void RemoveEntity(T entity)
+    }
+    public void RemoveEntity(T entity)
     {
         entities.Remove(entity);
+        Object.Destroy(entity.gameObject);
+        Debug.Log("entity removed");
     }
     private void RemoveObjects()
     {
         for (int i = entities.Count - 1; i >= 0; i--)
         {
-            Object.Destroy(entities[i].gameObject);
+            if (entities[i] != null)
+            {
+                Object.Destroy(entities[i].gameObject);
+            }
         }
         entities.Clear();
     }
@@ -56,11 +77,11 @@ public class EntityCollection<T> where T : Entity
     {
         RemoveObjects();
     }
-    public void TakeTurns(TurnHandler turnHandler)
+    public void TakeTurns()
     {
         foreach (var entity in entities)
         {
-            entity.TakeTurn(turnHandler);
+            entity.TakeTurn();
         }
     }
     public T GetEntity(Vector2Int tilePos)

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
-    public string name;
-    public InventorySlotsType type;
+    public string itemName;
+    public ItemType type;
     public Sprite art;
 }

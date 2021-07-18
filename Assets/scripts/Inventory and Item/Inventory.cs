@@ -9,13 +9,20 @@ public class Inventory : SingletonBehaviour<Inventory>
     [SerializeField] private List<Item> inventory = new List<Item>();
     public void AddItem(Item item)
     {
-        inventory.Add(item);
+        if (item.type == ItemType.gold)
+        {
+            //add to gold counter
+        }
+        else
+        {
+            inventory.Add(item);
+        }
     }
     public void Equip(Item item)
     {
-        for(int i = 0; i < inventory.Count; i++)
+        for (int i = 0; i < inventory.Count; i++)
         {
-            if(equipSlots[i].currentItem.type == item.type)
+            if (equipSlots[i].currentItem.type == item.type)
             {
                 equipSlots[i].currentItem = item;
                 return;
@@ -23,10 +30,10 @@ public class Inventory : SingletonBehaviour<Inventory>
         }
     }
 }
-public enum InventorySlotsType { helmet, chestplate, boots, weapon, ring, amulet }
+public enum ItemType { helmet, chestplate, boots, weapon, ring, amulet, gold }
 [System.Serializable]
 public class ItemSlot
 {
     public Item currentItem = null;
-    public InventorySlotsType slotType;
+    public ItemType slotType;
 }

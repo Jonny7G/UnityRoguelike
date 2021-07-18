@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerControlsHandler : MonoBehaviour
 {
-    [SerializeField] private Entity player;
-    [SerializeField] private TurnHandler turnHandler;
+    [SerializeField] private LiveEntity player;
+    [SerializeField] private PlayerSkillsHandler skillsHandler;
+    [SerializeField] private EntitiesHandler entHandler;
+
     private void Update()
     {
         Vector2Int move = new Vector2Int();
@@ -28,15 +30,20 @@ public class PlayerControlsHandler : MonoBehaviour
         bool moved = move.magnitude > 0;
         if (moved)
         {
-            if(!player.AttemptMove(turnHandler, player.position + move))
+            if (!player.AttemptMove(player.position + move))
             {
-                var entity = turnHandler.entities.liveEntities.GetEntity(player.position + move);
+                var entity = entHandler.liveEntities.GetEntity(player.position + move);
                 if (entity != null)
                 {
-                    //entity.health.Damage();
+                    skillsHandler.Attack(player, player.position + move);
                 }
             }
-            turnHandler.MoveTurn();
+            MoveTurn();
         }
+    }
+    private void MoveTurn()
+    {
+        skillsHandler.MoveTurn();
+        entHandler.MoveTurn(); //makes every active entity move their turn, important it happens after player turn.
     }
 }

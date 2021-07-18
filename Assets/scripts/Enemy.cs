@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Enemy : LiveEntity
 {
-    [HideInInspector]public Entity Player;
-    [SerializeField] private ItemPickup dropitem;
-
-    protected virtual void DropItems(TurnHandler turnHndlr)
+    public override void TakeTurn()
     {
-
+        base.TakeTurn();
+        //code for enemy to move their turn. use entHandler to access player position and map data.
     }
 }
