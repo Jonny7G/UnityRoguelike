@@ -19,7 +19,7 @@ public class EntitySpawner : MonoBehaviour
             {
                 if (entHandler.IsOpenTile(new Vector2Int(x, y)) && Random.Range(0f, 1f) < spawnChance && Vector2Int.Distance(new Vector2Int(x, y), entHandler.map.entrance) > minDistToPlayer)
                 {
-                    var newEnemy = Instantiate(enemyPrefabs[0]);
+                    var newEnemy = Instantiate(enemyPrefabs[Random.Range(0,enemyPrefabs.Count)]);
                     newEnemy.SetPosition(new Vector2Int(x, y));
                     newEnemy.entHandler = entHandler;
                     entHandler.liveEntities.AddEntity(newEnemy);
