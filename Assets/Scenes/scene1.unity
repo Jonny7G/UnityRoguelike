@@ -303,6 +303,7 @@ MonoBehaviour:
   spawnChance: 0.1
   maxEnemies: 3
   minDistToPlayer: 4
+  exitObject: {fileID: 0}
 --- !u!4 &804991641
 Transform:
   m_ObjectHideFlags: 0

@@ -10,9 +10,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         LoadNewLevel(); //on start to test behavior, eventually it would be something called upon the player reaching a level exit
     }
-    private void LoadNewLevel()
+    public void LoadNewLevel()
     {
+        UnloadLevel();
         var map = generator.GenerateMap();
         entities.LoadEntities(map);
+    }
+    private void UnloadLevel()
+    {
+        entities.RemoveEntities();
     }
 }

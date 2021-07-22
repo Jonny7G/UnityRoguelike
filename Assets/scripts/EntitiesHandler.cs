@@ -7,13 +7,14 @@ public class EntitiesHandler : MonoBehaviour
     public LiveEntity player;
     public EntityCollection<LiveEntity> liveEntities = new EntityCollection<LiveEntity>();
     public EntityCollection<ItemPickup> items = new EntityCollection<ItemPickup>();
-
+    public EntityCollection<Entity> otherEntities = new EntityCollection<Entity>();
     [SerializeField] private EntitySpawner spawner;
     public MapData map;
     public void MoveTurn()
     {
         liveEntities.TakeTurns();
         items.TakeTurns();
+        otherEntities.TakeTurns();
         Debug.Log("turn moved");
     }
     public void LoadEntities(MapData map)
@@ -26,9 +27,10 @@ public class EntitiesHandler : MonoBehaviour
     }
     public void RemoveEntities()
     {
-        liveEntities.RemoveEntity(player);
+        liveEntities.entities.Remove(player); //remove but don't destroy
         liveEntities.RemoveEntities();
         items.RemoveEntities();
+        otherEntities.RemoveEntities();
     }
 
     public bool IsOpenTile(Vector2Int position)
@@ -79,9 +81,9 @@ public class EntityCollection<T> where T : Entity
     }
     public void TakeTurns()
     {
-        foreach (var entity in entities)
+        for(int i = entities.Count - 1; i >= 0; i--)
         {
-            entity.TakeTurn();
+            entities[i].TakeTurn();
         }
     }
     public T GetEntity(Vector2Int tilePos)
