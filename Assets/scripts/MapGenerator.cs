@@ -23,18 +23,19 @@ public class MapGenerator : MonoBehaviour
         data.tiles = new int[,]
         {
             { 0,0,0,0,0,0,0,0,0,0},
-            { 0,0,1,1,1,1,0,0,0,0},
-            { 0,0,1,1,1,1,0,0,0,0},
-            { 0,0,1,0,0,0,1,1,0,0},
-            { 0,0,1,0,0,1,1,1,0,0},
-            { 0,0,1,0,1,1,1,1,0,0},
-            { 0,0,1,0,1,1,1,1,0,0},
-            { 0,0,1,1,1,1,1,1,0,0},
-            { 0,0,0,0,1,0,0,0,0,0},
-            { 1,0,0,0,0,0,0,0,0,0}
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,1,1,1,1,1,1,1,1,0},
+            { 0,0,0,0,0,0,0,0,0,0}
         };
-        data.entrance = new Vector2Int(1,2);
-        data.exit = new Vector2Int(3, 7);
+        data.rooms.Add(new RoomBounds(new Vector2Int(1, 1), new Vector2Int(9, 9)));
+        data.entrance = new Vector2Int(1, 2);
+        data.exit = new Vector2Int(5, 5);
         return data;
     }
 }
@@ -43,4 +44,14 @@ public class MapData
 {
     public int[,] tiles;
     public Vector2Int entrance, exit;
+    public List<RoomBounds> rooms = new List<RoomBounds>();
+}
+public struct RoomBounds
+{
+    public Vector2Int min, max;
+    public RoomBounds(Vector2Int min, Vector2Int max)
+    {
+        this.min = min;
+        this.max = max;
+    }
 }

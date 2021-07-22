@@ -10,7 +10,7 @@ public class MapRenderer : MonoBehaviour
     [Header("Tiles")]
     [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase groundTile;
-
+    [SerializeField] private TileBase exitTile;
     private void Awake()
     {
         ClearTiles();
@@ -28,13 +28,14 @@ public class MapRenderer : MonoBehaviour
             {
                 if (data.tiles[x, y] == 0)
                 {
-                    walls.SetTile(new Vector3Int(x, y-1, 0), wallTile); //place wall tile using the rule tile on wall tilemap
+                    walls.SetTile(new Vector3Int(x, y - 1, 0), wallTile); //place wall tile using the rule tile on wall tilemap
                 }
                 else
                 {
-                    ground.SetTile(new Vector3Int(x, y-1, 0), groundTile); //place ground tile on ground tilemap
+                    ground.SetTile(new Vector3Int(x, y - 1, 0), groundTile); //place ground tile on ground tilemap
                 }
             }
         }
+        ground.SetTile((Vector3Int)data.exit + Vector3Int.down, exitTile);
     }
 }

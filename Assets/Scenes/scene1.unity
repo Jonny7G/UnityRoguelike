@@ -209,7 +209,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -300,6 +300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 4015447772149097979, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
+  spawnChance: 0.1
+  maxEnemies: 3
+  minDistToPlayer: 4
 --- !u!4 &804991641
 Transform:
   m_ObjectHideFlags: 0
@@ -931,6 +934,7 @@ MonoBehaviour:
   ground: {fileID: 1292039174}
   wallTile: {fileID: 11400000, guid: 1db72b0265f0d2846bdbeb248a1b815a, type: 2}
   groundTile: {fileID: 11400000, guid: 35d43dc2e66a0f24bac172b89ce86735, type: 2}
+  exitTile: {fileID: 11400000, guid: 3a046c8a6e49f514c8ea1939492e033c, type: 2}
 --- !u!4 &2084651242
 Transform:
   m_ObjectHideFlags: 0
