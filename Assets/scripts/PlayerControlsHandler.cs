@@ -8,6 +8,7 @@ public class PlayerControlsHandler : MonoBehaviour
     [SerializeField] private PlayerSkillsHandler skillsHandler;
     [SerializeField] private EntitiesHandler entHandler;
 
+    [SerializeField, HideInInspector] private Vector2Int facingDirection;
     private void Update()
     {
         Vector2Int move = new Vector2Int();
@@ -19,7 +20,7 @@ public class PlayerControlsHandler : MonoBehaviour
         {
             move.x = 1;
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             move.y = 1;
         }
@@ -28,6 +29,7 @@ public class PlayerControlsHandler : MonoBehaviour
             move.y = -1;
         }
         bool moved = move.magnitude > 0;
+        facingDirection = move;
         if (moved)
         {
             if (!player.AttemptMove(player.position + move))
@@ -35,7 +37,7 @@ public class PlayerControlsHandler : MonoBehaviour
                 var entity = entHandler.liveEntities.GetEntity(player.position + move);
                 if (entity != null)
                 {
-                    skillsHandler.Attack(player, player.position + move);
+                    skillsHandler.Attack(player, facingDirection);
                 }
             }
             MoveTurn();

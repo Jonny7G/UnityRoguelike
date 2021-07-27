@@ -5,6 +5,7 @@ using UnityEngine;
 public class EntitiesHandler : MonoBehaviour
 {
     public LiveEntity player;
+    
     public EntityCollection<LiveEntity> liveEntities = new EntityCollection<LiveEntity>();
     public EntityCollection<ItemPickup> items = new EntityCollection<ItemPickup>();
     public EntityCollection<Entity> otherEntities = new EntityCollection<Entity>();
