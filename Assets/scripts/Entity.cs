@@ -9,6 +9,9 @@ public class Entity : MonoBehaviour
 
     public virtual void TakeTurn()
     {
+    }
+    public virtual void AfterTurns()
+    {
 
     }
     public bool AttemptMove(Vector2Int position)

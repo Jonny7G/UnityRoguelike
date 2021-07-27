@@ -4,43 +4,55 @@ using UnityEngine;
 
 public class PlayerControlsHandler : MonoBehaviour
 {
-    [SerializeField] private LiveEntity player;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private PlayerEntityHandler player;
     [SerializeField] private PlayerSkillsHandler skillsHandler;
     [SerializeField] private EntitiesHandler entHandler;
 
     [SerializeField, HideInInspector] private Vector2Int facingDirection;
     private void Update()
     {
-        Vector2Int move = new Vector2Int();
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (!gameManager.loading)
         {
-            move.x = -1;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            move.x = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            move.y = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            move.y = -1;
-        }
-        bool moved = move.magnitude > 0;
-        facingDirection = move;
-        if (moved)
-        {
-            if (!player.AttemptMove(player.position + move))
+            Vector2Int move = new Vector2Int();
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                var entity = entHandler.liveEntities.GetEntity(player.position + move);
-                if (entity != null)
-                {
-                    skillsHandler.Attack(player, facingDirection);
-                }
+                move.x = -1;
             }
-            MoveTurn();
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                move.x = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                move.y = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                move.y = -1;
+            }
+            if (Input.GetKeyDown(KeyCode.R)) //DETH
+            {
+                player.health.Damage(1000);
+            }
+            if (Input.GetKeyDown(KeyCode.Y)) //test damage
+            {
+                player.health.Damage(1);
+            }
+            bool moved = move.magnitude > 0;
+            facingDirection = move;
+            if (moved)
+            {
+                if (!player.entity.AttemptMove(player.entity.position + move))
+                {
+                    var entity = entHandler.liveEntities.GetEntity(player.entity.position + move);
+                    if (entity != null)
+                    {
+                        skillsHandler.Attack(facingDirection);
+                    }
+                }
+                MoveTurn();
+            }
         }
     }
     private void MoveTurn()

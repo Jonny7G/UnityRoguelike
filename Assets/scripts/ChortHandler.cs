@@ -7,7 +7,7 @@ public class ChortHandler : Enemy
     GameObject player;
     protected override void Start()
     {
-        health.OnDeath += OnDeath;
+        base.Start();
         player = GameObject.Find("Player");
     }
     

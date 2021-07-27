@@ -7,6 +7,7 @@ public class HealthHandler : MonoBehaviour
     public int Health { get => _health; private set { _health = value; } }
     [SerializeField] private int _health;
     public event System.Action OnDeath;
+    public event System.Action OnDamage;
     private int defaultHealth;
     private void Start()
     {
@@ -22,6 +23,7 @@ public class HealthHandler : MonoBehaviour
         if (Health > 0) //no way to kill twice
         {
             Health -= damage;
+            OnDamage?.Invoke();
             if (Health <= 0)
             {
                 OnDeath?.Invoke();

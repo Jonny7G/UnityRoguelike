@@ -14,6 +14,7 @@ public class EntitiesHandler : MonoBehaviour
     public void MoveTurn()
     {
         liveEntities.TakeTurns();
+        liveEntities.AfterTurns();
         items.TakeTurns();
         otherEntities.TakeTurns();
         Debug.Log("turn moved");
@@ -85,6 +86,13 @@ public class EntityCollection<T> where T : Entity
         for(int i = entities.Count - 1; i >= 0; i--)
         {
             entities[i].TakeTurn();
+        }
+    }
+    public void AfterTurns()
+    {
+        for (int i = entities.Count - 1; i >= 0; i--)
+        {
+            entities[i].AfterTurns();
         }
     }
     public T GetEntity(Vector2Int tilePos)

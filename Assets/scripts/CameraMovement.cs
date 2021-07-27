@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private LiveEntity target;
     private void LateUpdate()
     {
-        transform.position = target.position + new Vector3(0, 0, -10);
+        if (target != null)
+        {
+            transform.position = target.position + new Vector2(0.5f, 0);
+            transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+        }
     }
 }

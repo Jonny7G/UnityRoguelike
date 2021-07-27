@@ -9,7 +9,7 @@ public class LevelExit : Entity
         base.TakeTurn();
         if(entHandler.player.position == position)
         {
-            GameManager.Instance.LoadNewLevel();
+            FindObjectOfType<GameManager>().LoadNewLevel();
         }
     }
 }

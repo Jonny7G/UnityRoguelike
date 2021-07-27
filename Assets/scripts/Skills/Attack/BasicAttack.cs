@@ -6,6 +6,7 @@ public class BasicAttack : Attack
 {
     public override void AttackPosition(LiveEntity attacker, Vector2Int targetPos)
     {
+        base.AttackPosition(attacker, targetPos);
         var target = attacker.entHandler.liveEntities.GetEntity(targetPos);
         if (target != null)
         {
