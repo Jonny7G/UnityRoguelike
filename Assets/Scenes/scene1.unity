@@ -299,7 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 4015447772149097979, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
+  - {fileID: 3169941417673006606, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
+  - {fileID: -3627025025159506192, guid: 55bbe87a86b2f7744b0fb86adc3f1341, type: 3}
+  - {fileID: -8990702415246132269, guid: 5a0f54c39b77bb848991387833ece898, type: 3}
   density: 0.54
   minEnemies: 1
   maxEnemies: 3
