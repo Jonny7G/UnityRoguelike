@@ -4,14 +4,34 @@ using UnityEngine;
 
 public class EntitySpawner : MonoBehaviour
 {
+    [Header("Enemies")]
     [SerializeField] private List<Enemy> enemyPrefabs;
-    [SerializeField, Range(0f, 1f)] private float spawnChance;
-    [SerializeField] private int maxEnemies;
-    [SerializeField] private float minDistToPlayer;
-
+    [Header("Spawning")]
+    [Tooltip("How full should the map be")]
+    [SerializeField, Range(0f, 1f)] private float density;
+    [Tooltip("Enemies to spawn in a given room")]
+    [SerializeField] private int minEnemies, maxEnemies;
+    //serialize but don't show
     [SerializeField, HideInInspector] private LevelExit exitObject;
-    private void Awake()
+
+    public void SpawnEntities(EntitiesHandler entHandler)
     {
+        //spawn entities using map data and store in allEntities, set player for enemies, turnHandler for
+        SpawnExit(entHandler);
+        List<int> rooms = new List<int>();
+        //1 because 0 is where player is at start
+        for (int i = 1; i < entHandler.map.rooms.Count; i++)
+        {
+            rooms.Add(i);
+        }
+        int fullRooms = Mathf.FloorToInt(density * (rooms.Count - 1));
+        for (int i = 0; i < fullRooms; i++)
+        {
+            int roomIndex = Random.Range(0, rooms.Count);
+            SpawnInRoom(rooms[roomIndex], entHandler);
+            rooms.Remove(roomIndex);
+        }
+        return;
     }
     private void SpawnExit(EntitiesHandler entHandler)
     {
@@ -20,32 +40,33 @@ public class EntitySpawner : MonoBehaviour
         exitObject.SetPosition(entHandler.map.exit);
         entHandler.otherEntities.AddEntity(exitObject);
     }
-    public void SpawnEntities(EntitiesHandler entHandler)
+    private Vector2Int GetRandomValidRoomPosition(int room, EntitiesHandler entHandler)
     {
-        //spawn entities using map data and store in allEntities, set player for enemies, turnHandler for
-        SpawnExit(entHandler);
-        RoomBounds room = entHandler.map.rooms[0];
-        int spawned = 0;
-        for (int x = room.min.x; x <= room.max.x; x++)
+        RectInt roomBnds = entHandler.map.rooms[room];
+        var pos = new Vector2Int(
+                Random.Range(roomBnds.x, roomBnds.max.x),
+                Random.Range(roomBnds.y, roomBnds.max.y)
+                );
+        //going to want to add max iterations for this just in case
+        //while (!entHandler.IsOpenTile(pos))
+        //{
+        //    pos = new Vector2Int(
+        //        Random.Range(roomBnds.x, roomBnds.max.x),
+        //        Random.Range(roomBnds.y, roomBnds.max.y)
+        //        );
+        //}
+        return pos;
+    }
+    private void SpawnInRoom(int room, EntitiesHandler entHandler)
+    {
+        int numToSpawn = Random.Range(minEnemies, maxEnemies);
+        for (int i = 0; i <= numToSpawn; i++)
         {
-            for (int y = room.min.y; y < room.max.y; y++)
-            {
-                var pos = new Vector2Int(x, y);
-                if (entHandler.IsOpenTile(pos) && pos != entHandler.map.exit && Random.Range(0f, 1f) < spawnChance && Vector2Int.Distance(pos, entHandler.map.entrance) > minDistToPlayer)
-                {
-                    var newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
-                    newEnemy.SetPosition(new Vector2Int(x, y));
-                    newEnemy.entHandler = entHandler;
-                    entHandler.liveEntities.AddEntity(newEnemy);
-                    spawned++;
-                    if (spawned >= maxEnemies)
-                    {
-                        return; //stop spawning
-                    }
-                }
-            }
+            var pos = GetRandomValidRoomPosition(room, entHandler);
+            var newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
+            newEnemy.SetPosition(pos);
+            newEnemy.entHandler = entHandler;
+            entHandler.liveEntities.AddEntity(newEnemy);
         }
-
-        return;
     }
 }

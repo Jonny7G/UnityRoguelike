@@ -307,6 +307,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 4015447772149097979, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
+  density: 0
+  minEnemies: 0
+  maxEnemies: 3
+  exitObject: {fileID: 0}
 --- !u!4 &769609439
 Transform:
   m_ObjectHideFlags: 0
@@ -381,8 +385,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 936634061}
-  - component: {fileID: 936634059}
   - component: {fileID: 936634060}
+  - component: {fileID: 936634059}
   m_Layer: 0
   m_Name: MapHandler
   m_TagString: Untagged
@@ -399,10 +403,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 936634058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7917cb54c3388246bee3aace5fc2d89, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ce806b6c176be4fa44f12d7aaed1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapRndr: {fileID: 936634060}
+  mapSize: 50
+  iterations: 3
+  hallway: 1
+  shouldDebugDrawBsp: 0
+  rndr: {fileID: 936634060}
 --- !u!114 &936634060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +427,7 @@ MonoBehaviour:
   ground: {fileID: 1430966968}
   wallTile: {fileID: 11400000, guid: 1db72b0265f0d2846bdbeb248a1b815a, type: 2}
   groundTile: {fileID: 11400000, guid: 35d43dc2e66a0f24bac172b89ce86735, type: 2}
+  exitTile: {fileID: 11400000, guid: 3a046c8a6e49f514c8ea1939492e033c, type: 2}
 --- !u!4 &936634061
 Transform:
   m_ObjectHideFlags: 0
@@ -509,6 +518,7 @@ MonoBehaviour:
   player: {fileID: 226484233}
   skillsHandler: {fileID: 1370129919}
   entHandler: {fileID: 17895505}
+  facingDirection: {x: 0, y: 0}
 --- !u!1 &1430966967
 GameObject:
   m_ObjectHideFlags: 0

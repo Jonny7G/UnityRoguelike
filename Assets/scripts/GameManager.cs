@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    public MapGenerator generator;
+    public MapGen generator;
     public EntitiesHandler entities;
     private void Start()
     {

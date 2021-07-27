@@ -166,8 +166,8 @@ Transform:
   - {fileID: 755081333}
   - {fileID: 1633389432}
   - {fileID: 1978022139}
-  - {fileID: 2084651242}
   - {fileID: 804991641}
+  - {fileID: 2084651242}
   - {fileID: 2141648627}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -226,7 +226,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -300,9 +300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 4015447772149097979, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
-  spawnChance: 0.1
+  density: 0.54
+  minEnemies: 1
   maxEnemies: 3
-  minDistToPlayer: 4
   exitObject: {fileID: 0}
 --- !u!4 &804991641
 Transform:
@@ -316,7 +316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 357299771}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811905654
 GameObject:
@@ -815,6 +815,7 @@ MonoBehaviour:
   player: {fileID: 2141648629}
   skillsHandler: {fileID: 1633389434}
   entHandler: {fileID: 1978022140}
+  facingDirection: {x: 0, y: 0}
 --- !u!114 &1633389434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,8 +898,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2084651242}
-  - component: {fileID: 2084651240}
   - component: {fileID: 2084651241}
+  - component: {fileID: 2084651240}
   m_Layer: 0
   m_Name: MapHandler
   m_TagString: Untagged
@@ -915,10 +916,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2084651239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7917cb54c3388246bee3aace5fc2d89, type: 3}
+  m_Script: {fileID: 11500000, guid: 79ce806b6c176be4fa44f12d7aaed1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapRndr: {fileID: 2084651241}
+  mapSize: 50
+  minExitDistance: 555
+  iterations: 3
+  hallway: 1
+  shouldDebugDrawBsp: 0
+  rndr: {fileID: 2084651241}
 --- !u!114 &2084651241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,6 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78794e6a0a404524282b01c5474287c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  edgeThickness: 25
   walls: {fileID: 860309162}
   ground: {fileID: 1292039174}
   wallTile: {fileID: 11400000, guid: 1db72b0265f0d2846bdbeb248a1b815a, type: 2}
@@ -949,7 +956,7 @@ Transform:
   m_Children:
   - {fileID: 811905655}
   m_Father: {fileID: 357299771}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141648625
 GameObject:

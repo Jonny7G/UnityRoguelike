@@ -70,14 +70,14 @@ public class PlayerSkillsHandler : MonoBehaviour
         }
         return false;
     }
-    public void Attack(LiveEntity player, Vector2Int attackPos)
+    public void Attack(LiveEntity player, Vector2Int direction)
     {
         Attack currAttack = defaultAttack;
         if (currSkill != null && currSkill.skill is Attack)
         {
             currAttack = (Attack)currSkill.skill;
         }
-        currAttack.AttackPosition(player, attackPos);
+        currAttack.AttackPosition(player, player.position + direction);
         if (currSkill != null && currAttack == currSkill.skill)
         {
             currSkill.StartCooldown();
