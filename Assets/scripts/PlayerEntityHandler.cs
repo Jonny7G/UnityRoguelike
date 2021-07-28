@@ -16,7 +16,8 @@ public class PlayerEntityHandler : MonoBehaviour
     {
         health.OnDeath += OnDeath;
         health.OnDamage += OnDamaged;
-        //entity.shakeMag = 0;
+        entity.shakeMag = 0; //don't want player to shake when damaged
+        entity.Show(); //don't hide the player
     }
     private void OnDeath()
     {

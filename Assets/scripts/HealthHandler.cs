@@ -8,7 +8,7 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] private int _health;
     public event System.Action OnDeath;
     public event System.Action OnDamage;
-    private int defaultHealth;
+    public int defaultHealth { get; private set; }
     private void Start()
     {
         defaultHealth = Health;

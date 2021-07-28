@@ -13,31 +13,35 @@ public class ChortHandler : Enemy
     
     public override void TakeTurn()
     {
-        Vector2Int move = new Vector2Int(0, 0);
-        Vector2Int test = new Vector2Int(0, 0);
+        base.TakeTurn();
+        if (seen)
+        {
+            Vector2Int move = new Vector2Int(0, 0);
+            Vector2Int test = new Vector2Int(0, 0);
 
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) > Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.y > gameObject.transform.position.y) { move.y = 1; }
-            else if (player.transform.position.y < gameObject.transform.position.y) { move.y = -1; }
-        }
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
-            else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
-        }
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) == Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
-            else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
-        }
+            if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) > Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
+            {
+                if (player.transform.position.y > gameObject.transform.position.y) { move.y = 1; }
+                else if (player.transform.position.y < gameObject.transform.position.y) { move.y = -1; }
+            }
+            if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
+            {
+                if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
+                else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
+            }
+            if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) == Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
+            {
+                if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
+                else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
+            }
 
-        test.y = (int)gameObject.transform.position.y;
-        test.x = (int)gameObject.transform.position.x;
+            test.y = (int)gameObject.transform.position.y;
+            test.x = (int)gameObject.transform.position.x;
 
-        if (AttemptMove(test + move))
-        {
-            AttemptMove(test + move);
+            if (AttemptMove(test + move))
+            {
+                AttemptMove(test + move);
+            }
         }
     }
 }

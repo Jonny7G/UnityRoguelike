@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -2194074592763700904}
   - component: {fileID: -8047624466770452991}
   - component: {fileID: -3627025025159506192}
+  - component: {fileID: 3680992588149966275}
   m_Layer: 0
   m_Name: big_zombie
   m_TagString: Untagged
@@ -110,3 +111,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entHandler: {fileID: 0}
   health: {fileID: -8047624466770452991}
+  dropHandler: {fileID: 3680992588149966275}
+  shakeMag: 0.3
+  spawnRoom: 0
+  sr: {fileID: 0}
+--- !u!114 &3680992588149966275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875053994850767188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f620f8564e77d4fa7139aaea8ba284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootDrops:
+  - {fileID: 11400000, guid: 94aee39210907b7408c07a973f3a7c06, type: 2}
+  - {fileID: 11400000, guid: 1460bf7cd750ace49a701882f8942a22, type: 2}

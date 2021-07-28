@@ -7,7 +7,14 @@ public class GameManager : MonoBehaviour
     public MapGen generator;
     public EntitiesHandler entities;
     public LoadFader fader;
+    [Header("global values")]
+    [SerializeField] private Counter goldCounter,dungeonLevel;
     public bool loading { get; private set; }
+    private void Awake()
+    {
+        dungeonLevel.ResetState();
+        goldCounter.ResetState();
+    }
     private void Start()
     {
         Load();
@@ -17,6 +24,7 @@ public class GameManager : MonoBehaviour
         UnloadLevel();
         var map = generator.GenerateMap();
         entities.LoadEntities(map);
+        dungeonLevel.Increment();
     }
     public void LoadNewLevel()
     {

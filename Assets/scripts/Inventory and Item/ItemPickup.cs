@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
-public class ItemPickup : Entity
+public abstract class ItemPickup : Entity
 {
-    public Item item;
-    protected SpriteRenderer sr;
+
     protected virtual void Start()
     {
-        sr.sprite = item.art;
+
     }
     public override void TakeTurn()
     {
         if(entHandler.player.position == position)
         {
-            Inventory.Instance.AddItem(item);
+            PickupItem();
             entHandler.items.RemoveEntity(this);
         }
     }
-
+    //what to do when the item is picked up, itementity is removed after this call
+    public abstract void PickupItem();
 }

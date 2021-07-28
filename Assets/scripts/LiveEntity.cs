@@ -6,9 +6,19 @@ using DG.Tweening;
 public class LiveEntity : Entity
 {
     [SerializeField] public HealthHandler health;
-    [SerializeField, HideInInspector] protected Tween moveTween;
-    private float shakeMag = 0.3f;
+    [SerializeField] public LootDropHandler dropHandler;
+    [HideInInspector] public float shakeMag = 0.3f;
+    [HideInInspector] public int spawnRoom;
+    [SerializeField, HideInInspector] private SpriteRenderer sr;
+
+    protected bool seen = false;
     protected bool damagedOnTurn = false;
+    protected virtual void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.enabled = false;
+    }
     protected virtual void Start()
     {
         health.OnDeath += OnDeath;
@@ -19,6 +29,22 @@ public class LiveEntity : Entity
         health.OnDeath -= OnDeath;
         health.OnDamage -= OnDamage;
     }
+    public void Show()
+    {
+        seen = true;
+        sr.enabled = true;
+    }
+    public override void TakeTurn()
+    {
+        base.TakeTurn();
+        if (!seen)
+        {
+            if (entHandler.map.rooms[spawnRoom].Contains(entHandler.player.position))
+            {
+                Show();
+            }
+        }
+    }
     public override void AfterTurns()
     {
         base.AfterTurns();
@@ -26,10 +52,14 @@ public class LiveEntity : Entity
     }
     public void DoAttack(Vector2 direction)
     {
-        moveTween = transform.DOPunchPosition(direction*0.5f, 0.2f, 0);
+        moveTween = transform.DOPunchPosition(direction * 0.5f, 0.2f, 0);
     }
     protected virtual void OnDeath()
     {
+        if (dropHandler != null)
+        {
+            dropHandler.DropLoot(this);
+        }
         entHandler.liveEntities.RemoveEntity(this);
     }
     protected virtual void OnDamage()

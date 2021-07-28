@@ -34,7 +34,21 @@ public class EntitiesHandler : MonoBehaviour
         items.RemoveEntities();
         otherEntities.RemoveEntities();
     }
-
+    public void AddLiveEntity(LiveEntity entity)
+    {
+        entity.entHandler = this;
+        liveEntities.AddEntity(entity);
+    }
+    public void AddItemEntity(ItemPickup entity)
+    {
+        entity.entHandler = this;
+        items.AddEntity(entity);
+    }
+    public void AddOtherEntity(Entity entity)
+    {
+        entity.entHandler = this;
+        otherEntities.AddEntity(entity);
+    }
     public bool IsOpenTile(Vector2Int position)
     {
         if (position.x >= 0 && position.y >= 0 && position.x < map.tiles.GetLength(0) && position.y < map.tiles.GetLength(1))

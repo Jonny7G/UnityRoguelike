@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3821255695315920620}
   - component: {fileID: -8346973426485358104}
   - component: {fileID: -8990702415246132269}
+  - component: {fileID: 949499382154349983}
   m_Layer: 0
   m_Name: Chort
   m_TagString: Untagged
@@ -110,3 +111,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entHandler: {fileID: 0}
   health: {fileID: -8346973426485358104}
+  dropHandler: {fileID: 949499382154349983}
+  shakeMag: 0.3
+  spawnRoom: 0
+  sr: {fileID: 0}
+--- !u!114 &949499382154349983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985150272599254488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f620f8564e77d4fa7139aaea8ba284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootDrops:
+  - {fileID: 11400000, guid: 94aee39210907b7408c07a973f3a7c06, type: 2}
+  - {fileID: 11400000, guid: 1460bf7cd750ace49a701882f8942a22, type: 2}

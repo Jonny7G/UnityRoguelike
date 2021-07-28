@@ -8,26 +8,28 @@ public class PlayerControlsHandler : MonoBehaviour
     [SerializeField] private PlayerEntityHandler player;
     [SerializeField] private PlayerSkillsHandler skillsHandler;
     [SerializeField] private EntitiesHandler entHandler;
-
-    [SerializeField, HideInInspector] private Vector2Int facingDirection;
+    [SerializeField] private float initialHoldTime, continuousHoldTime;
+    private Vector2Int facingDirection;
+    private Timer holdMoveTime;
     private void Update()
     {
         if (!gameManager.loading)
         {
             Vector2Int move = new Vector2Int();
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            bool hold = false;
+            if (CheckMoveDirection(KeyCode.LeftArrow, ref hold))
             {
                 move.x = -1;
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (CheckMoveDirection(KeyCode.RightArrow, ref hold))
             {
                 move.x = 1;
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (CheckMoveDirection(KeyCode.UpArrow, ref hold))
             {
                 move.y = 1;
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            else if (CheckMoveDirection(KeyCode.DownArrow, ref hold))
             {
                 move.y = -1;
             }
@@ -43,17 +45,40 @@ public class PlayerControlsHandler : MonoBehaviour
             facingDirection = move;
             if (moved)
             {
-                if (!player.entity.AttemptMove(player.entity.position + move))
+                if (player.entity.AttemptMove(player.entity.position + move))
+                {
+                    MoveTurn();
+                }
+                else if (!hold)
                 {
                     var entity = entHandler.liveEntities.GetEntity(player.entity.position + move);
                     if (entity != null)
                     {
                         skillsHandler.Attack(facingDirection);
                     }
+                    MoveTurn();
                 }
-                MoveTurn();
             }
         }
+    }
+    private bool CheckMoveDirection(KeyCode key, ref bool hold)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            holdMoveTime = new Timer(initialHoldTime);
+            return true;
+        }
+        else if (Input.GetKey(key))
+        {
+            hold = true;
+            if (holdMoveTime.CheckUpdateTimer())
+            {
+                holdMoveTime.SetDuration(continuousHoldTime);
+                holdMoveTime.RestartTimer();
+                return true;
+            }
+        }
+        return false;
     }
     private void MoveTurn()
     {

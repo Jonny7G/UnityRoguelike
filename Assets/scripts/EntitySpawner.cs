@@ -66,6 +66,7 @@ public class EntitySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
             newEnemy.SetPosition(pos);
             newEnemy.entHandler = entHandler;
+            newEnemy.spawnRoom = room;
             entHandler.liveEntities.AddEntity(newEnemy);
         }
     }
