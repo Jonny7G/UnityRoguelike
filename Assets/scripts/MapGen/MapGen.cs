@@ -28,7 +28,9 @@ public class MapGen : MonoBehaviour
     //Clears prev map
     private void InitReferences()
     {
-        //Random.InitState(3);
+        int ranSeed = Random.Range(3, 6);
+        Random.InitState(ranSeed);
+        iterations = ranSeed;
     }
 
     //Creates Rooms inside container
