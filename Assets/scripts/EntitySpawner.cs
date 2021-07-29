@@ -11,12 +11,14 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float density;
     [Tooltip("Enemies to spawn in a given room")]
     [SerializeField] private int minEnemies, maxEnemies;
+    [SerializeField] private HeartDrop heartAtStartDrop;
     //serialize but don't show
     [SerializeField, HideInInspector] private LevelExit exitObject;
 
     public void SpawnEntities(EntitiesHandler entHandler)
     {
         //spawn entities using map data and store in allEntities, set player for enemies, turnHandler for
+        SpawnHeart(entHandler);
         SpawnExit(entHandler);
         List<int> rooms = new List<int>();
         //1 because 0 is where player is at start
@@ -31,7 +33,15 @@ public class EntitySpawner : MonoBehaviour
             SpawnInRoom(rooms[roomIndex], entHandler);
             rooms.Remove(roomIndex);
         }
-        return;
+    }
+    private void SpawnHeart(EntitiesHandler entHandler)
+    {
+        if (heartAtStartDrop.ShouldDrop(entHandler))
+        {
+            var heart = Instantiate(heartAtStartDrop.item);
+            heart.SetPosition(GetRandomValidRoomPosition(0, entHandler));
+            entHandler.AddItemEntity(heart);
+        }
     }
     private void SpawnExit(EntitiesHandler entHandler)
     {
@@ -47,14 +57,6 @@ public class EntitySpawner : MonoBehaviour
                 Random.Range(roomBnds.x, roomBnds.max.x),
                 Random.Range(roomBnds.y, roomBnds.max.y)
                 );
-        //going to want to add max iterations for this just in case
-        //while (!entHandler.IsOpenTile(pos))
-        //{
-        //    pos = new Vector2Int(
-        //        Random.Range(roomBnds.x, roomBnds.max.x),
-        //        Random.Range(roomBnds.y, roomBnds.max.y)
-        //        );
-        //}
         return pos;
     }
     private void SpawnInRoom(int room, EntitiesHandler entHandler)
@@ -66,6 +68,7 @@ public class EntitySpawner : MonoBehaviour
             var newEnemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]);
             newEnemy.SetPosition(pos);
             newEnemy.entHandler = entHandler;
+            newEnemy.spawnRoom = room;
             entHandler.liveEntities.AddEntity(newEnemy);
         }
     }

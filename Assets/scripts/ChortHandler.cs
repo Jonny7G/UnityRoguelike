@@ -4,40 +4,53 @@ using UnityEngine;
 
 public class ChortHandler : Enemy
 {
-    GameObject player;
-    protected override void Start()
-    {
-        health.OnDeath += OnDeath;
-        player = GameObject.Find("Player");
-    }
-    
+    [SerializeField] private int damage;
+    [SerializeField] private float chaseDist;
     public override void TakeTurn()
     {
-        Vector2Int move = new Vector2Int(0, 0);
-        Vector2Int test = new Vector2Int(0, 0);
+        base.TakeTurn();
+        if (seen)
+        {
+            float dist = Vector2.Distance(position, entHandler.player.position);
+            
+            if (IsPlayerAdjacent())
+            {
+                entHandler.player.health.Damage(damage);
+            }
+            else if (dist < chaseDist && dist > 1.5f)
+            {
+                Vector2Int move = new Vector2Int(0, 0);
 
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) > Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.y > gameObject.transform.position.y) { move.y = 1; }
-            else if (player.transform.position.y < gameObject.transform.position.y) { move.y = -1; }
-        }
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) < Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
-            else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
-        }
-        if ((Mathf.Abs(player.transform.position.y - gameObject.transform.position.y) == Mathf.Abs(player.transform.position.x - gameObject.transform.position.x)))
-        {
-            if (player.transform.position.x > gameObject.transform.position.x) { move.x = 1; }
-            else if (player.transform.position.x < gameObject.transform.position.x) { move.x = -1; }
-        }
+                if ((Mathf.Abs(entHandler.player.position.y - position.y) > Mathf.Abs(entHandler.player.position.x - position.x)))
+                {
+                    if (entHandler.player.position.y > position.y) { move.y = 1; }
+                    else if (entHandler.player.position.y < position.y) { move.y = -1; }
+                }
+                if ((Mathf.Abs(entHandler.player.position.y - position.y) < Mathf.Abs(entHandler.player.position.x - position.x)))
+                {
+                    if (entHandler.player.position.x > position.x) { move.x = 1; }
+                    else if (entHandler.player.position.x < position.x) { move.x = -1; }
+                }
+                if ((Mathf.Abs(entHandler.player.position.y - position.y) == Mathf.Abs(entHandler.player.position.x - position.x)))
+                {
+                    if (entHandler.player.position.x > position.x) { move.x = 1; }
+                    else if (entHandler.player.position.x < position.x) { move.x = -1; }
+                }
 
-        test.y = (int)gameObject.transform.position.y;
-        test.x = (int)gameObject.transform.position.x;
-
-        if (AttemptMove(test + move))
-        {
-            AttemptMove(test + move);
+                if (!AttemptMove(position + move))
+                {
+                    var entity = entHandler.liveEntities.GetEntity(position + move);
+                    if (entity == entHandler.player)
+                    {
+                        DoAttack(move);
+                        entHandler.player.health.Damage(damage);
+                    }
+                }
+            }
+            else
+            {
+                MoveToPlayer();
+            }
         }
     }
 }

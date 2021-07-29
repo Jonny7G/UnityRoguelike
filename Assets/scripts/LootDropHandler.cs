@@ -5,25 +5,24 @@ using UnityEngine;
 public class LootDropHandler : MonoBehaviour
 {
     [SerializeField] private List<LootDrop> lootDrops;
-    public Item GetDrop()
+    public void DropLoot(LiveEntity entity)
+    {
+        var item = GetDrop(entity);
+        if (item != null)
+        {
+            item.SetPosition(entity.position);
+            entity.entHandler.AddItemEntity(item);
+        }
+    }
+    public ItemPickup GetDrop(LiveEntity entity)
     {
         foreach (var drop in lootDrops)
         {
-            if (drop.ShouldDrop())
+            if (drop.ShouldDrop(entity.entHandler))
             {
-                return drop.item;
+                return Instantiate(drop.item);
             }
         }
         return null;
-    }
-}
-[System.Serializable]
-public class LootDrop
-{
-    public Item item;
-    [Range(0f, 1f)] public float dropChance;
-    public bool ShouldDrop()
-    {
-        return Random.Range(0f, 1f) <= dropChance;
     }
 }

@@ -6,7 +6,7 @@ public class PlayerSkillsHandler : MonoBehaviour
 {
     public SkillInstance[] activeSkills = new SkillInstance[4];
     public List<SkillInstance> inactiveSkills = new List<SkillInstance>();
-    [SerializeField] protected LiveEntity player;
+    [SerializeField] protected PlayerEntityHandler player;
     [SerializeField] protected Attack defaultAttack = default;
 
     protected SkillInstance currSkill;
@@ -14,7 +14,6 @@ public class PlayerSkillsHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("pressed");
             currSkill = activeSkills[0];
             TryDoSkillUtility();
         }
@@ -62,22 +61,21 @@ public class PlayerSkillsHandler : MonoBehaviour
         if (currSkill != null && currSkill.skill is UtilitySkill)
         {
             UtilitySkill utilSkill = (UtilitySkill)currSkill.skill;
-            utilSkill.UseSkill(player);
+            utilSkill.UseSkill(player.entity);
             currSkill.StartCooldown();
-            Debug.Log("used");
             currSkill = null;
             return true;
         }
         return false;
     }
-    public void Attack(LiveEntity player, Vector2Int direction)
+    public void Attack(Vector2Int direction)
     {
         Attack currAttack = defaultAttack;
         if (currSkill != null && currSkill.skill is Attack)
         {
             currAttack = (Attack)currSkill.skill;
         }
-        currAttack.AttackPosition(player, player.position + direction);
+        currAttack.AttackPosition(player.entity, player.entity.position + direction);
         if (currSkill != null && currAttack == currSkill.skill)
         {
             currSkill.StartCooldown();

@@ -9,11 +9,12 @@ public class EntitiesHandler : MonoBehaviour
     public EntityCollection<LiveEntity> liveEntities = new EntityCollection<LiveEntity>();
     public EntityCollection<ItemPickup> items = new EntityCollection<ItemPickup>();
     public EntityCollection<Entity> otherEntities = new EntityCollection<Entity>();
-    [SerializeField] private EntitySpawner spawner;
+    [SerializeField] private SpawnSystem spawner;
     public MapData map;
     public void MoveTurn()
     {
         liveEntities.TakeTurns();
+        liveEntities.AfterTurns();
         items.TakeTurns();
         otherEntities.TakeTurns();
         Debug.Log("turn moved");
@@ -23,7 +24,7 @@ public class EntitiesHandler : MonoBehaviour
         this.map = map;
         player.SetPosition(map.entrance);
         liveEntities.AddEntity(player);
-        spawner.SpawnEntities(this);
+        spawner.GetSpawner().SpawnEntities(this);
         //need to subscribe to entity health ondeath event so we can remove it
     }
     public void RemoveEntities()
@@ -33,7 +34,21 @@ public class EntitiesHandler : MonoBehaviour
         items.RemoveEntities();
         otherEntities.RemoveEntities();
     }
-
+    public void AddLiveEntity(LiveEntity entity)
+    {
+        entity.entHandler = this;
+        liveEntities.AddEntity(entity);
+    }
+    public void AddItemEntity(ItemPickup entity)
+    {
+        entity.entHandler = this;
+        items.AddEntity(entity);
+    }
+    public void AddOtherEntity(Entity entity)
+    {
+        entity.entHandler = this;
+        otherEntities.AddEntity(entity);
+    }
     public bool IsOpenTile(Vector2Int position)
     {
         if (position.x >= 0 && position.y >= 0 && position.x < map.tiles.GetLength(0) && position.y < map.tiles.GetLength(1))
@@ -85,6 +100,13 @@ public class EntityCollection<T> where T : Entity
         for(int i = entities.Count - 1; i >= 0; i--)
         {
             entities[i].TakeTurn();
+        }
+    }
+    public void AfterTurns()
+    {
+        for (int i = entities.Count - 1; i >= 0; i--)
+        {
+            entities[i].AfterTurns();
         }
     }
     public T GetEntity(Vector2Int tilePos)

@@ -9,5 +9,8 @@ public abstract class Attack : Skill
     {
         return Random.Range(minDamage, maxDamage);
     }
-    public abstract void AttackPosition(LiveEntity attacker, Vector2Int targetPos);
+    public virtual void AttackPosition(LiveEntity attacker, Vector2Int targetPos)
+    {
+        attacker.DoAttack(targetPos - attacker.position);
+    }
 }

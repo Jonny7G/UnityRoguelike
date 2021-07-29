@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Basic Attack
   skillDescription: The default attack.
-  cooldown: 0
-  minDamage: 1
-  maxDamage: 2
+  minDamage: 2
+  maxDamage: 5

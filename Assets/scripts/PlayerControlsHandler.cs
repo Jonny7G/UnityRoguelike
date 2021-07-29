@@ -4,48 +4,88 @@ using UnityEngine;
 
 public class PlayerControlsHandler : MonoBehaviour
 {
-    [SerializeField] private LiveEntity player;
-    [SerializeField] private PlayerSkillsHandler skillsHandler;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private PlayerEntityHandler player;
+    [SerializeField] private PlayerAttackHandler attackHandler;
     [SerializeField] private EntitiesHandler entHandler;
+    [SerializeField] private float initialHoldTime, continuousHoldTime;
+    private Vector2Int facingDirection;
+    private Timer holdMoveTime;
 
-    [SerializeField, HideInInspector] private Vector2Int facingDirection;
     private void Update()
     {
-        Vector2Int move = new Vector2Int();
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (!gameManager.loading)
         {
-            move.x = -1;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            move.x = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            move.y = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            move.y = -1;
-        }
-        bool moved = move.magnitude > 0;
-        facingDirection = move;
-        if (moved)
-        {
-            if (!player.AttemptMove(player.position + move))
+            Vector2Int move = new Vector2Int();
+            bool hold = false;
+            if (CheckMoveDirection(KeyCode.LeftArrow, ref hold))
             {
-                var entity = entHandler.liveEntities.GetEntity(player.position + move);
-                if (entity != null)
+                move.x = -1;
+            }
+            else if (CheckMoveDirection(KeyCode.RightArrow, ref hold))
+            {
+                move.x = 1;
+            }
+            else if (CheckMoveDirection(KeyCode.UpArrow, ref hold))
+            {
+                move.y = 1;
+            }
+            else if (CheckMoveDirection(KeyCode.DownArrow, ref hold))
+            {
+                move.y = -1;
+            }
+            if (Input.GetKeyDown(KeyCode.R)) //quick restart
+            {
+                player.health.Damage(1000);
+            }
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.Y)) //cheat while testing in editor
+            {
+                player.health.Heal(100);
+            }
+#endif
+            bool moved = move.magnitude > 0;
+            facingDirection = move;
+            if (moved)
+            {
+                if (player.entity.AttemptMove(player.entity.position + move))
                 {
-                    skillsHandler.Attack(player, facingDirection);
+                    MoveTurn();
+                }
+                else if (!hold)
+                {
+                    var entity = entHandler.liveEntities.GetEntity(player.entity.position + move);
+                    if (entity != null)
+                    {
+                        attackHandler.Attack(entity);
+                    }
+                    MoveTurn();
                 }
             }
-            MoveTurn();
         }
+    }
+    private bool CheckMoveDirection(KeyCode key, ref bool hold)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            holdMoveTime = new Timer(initialHoldTime);
+            return true;
+        }
+        else if (Input.GetKey(key))
+        {
+            hold = true;
+            if (holdMoveTime.CheckUpdateTimer())
+            {
+                holdMoveTime.SetDuration(continuousHoldTime);
+                holdMoveTime.RestartTimer();
+                return true;
+            }
+        }
+        return false;
     }
     private void MoveTurn()
     {
-        skillsHandler.MoveTurn();
         entHandler.MoveTurn(); //makes every active entity move their turn, important it happens after player turn.
     }
 }

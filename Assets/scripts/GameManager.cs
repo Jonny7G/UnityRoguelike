@@ -2,19 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : SingletonBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
     public MapGen generator;
     public EntitiesHandler entities;
+    public LoadFader fader;
+    public Counter dungeonLevel;
+    public bool loading { get; private set; }
     private void Start()
     {
-        LoadNewLevel(); //on start to test behavior, eventually it would be something called upon the player reaching a level exit
+        Load();
     }
-    public void LoadNewLevel()
+    private void Load()
     {
         UnloadLevel();
         var map = generator.GenerateMap();
         entities.LoadEntities(map);
+        dungeonLevel.Increment();
+    }
+    public void LoadNewLevel()
+    {
+        if (!loading)
+        {
+            StartCoroutine(LoadFade());
+        }
+    }
+    private IEnumerator LoadFade()
+    {
+        loading = true;
+        fader.FadeOut();
+        yield return new WaitUntil(() => fader.IsFadedOut);
+        loading = false;
+        Load();
+        fader.FadeIn();
     }
     private void UnloadLevel()
     {

@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 3821255695315920620}
   - component: {fileID: -8346973426485358104}
   - component: {fileID: -8990702415246132269}
+  - component: {fileID: 949499382154349983}
+  - component: {fileID: 7374647354647008798}
+  - component: {fileID: 8033876053372144215}
   m_Layer: 0
   m_Name: Chort
   m_TagString: Untagged
@@ -95,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb581dc334694eb46b4ef691fb010a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 5
+  stats: {fileID: 11400000, guid: 78d0cd8a17ebd2a4695238d9578fa2a4, type: 2}
+  _health: 3
 --- !u!114 &-8990702415246132269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,3 +114,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entHandler: {fileID: 0}
   health: {fileID: -8346973426485358104}
+  dropHandler: {fileID: 949499382154349983}
+  shakeMag: 0.3
+  spawnRoom: 0
+  sr: {fileID: 0}
+  damage: 1
+  chaseDist: 3
+--- !u!114 &949499382154349983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985150272599254488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f620f8564e77d4fa7139aaea8ba284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootDrops:
+  - {fileID: 11400000, guid: 94aee39210907b7408c07a973f3a7c06, type: 2}
+  - {fileID: 11400000, guid: 1460bf7cd750ace49a701882f8942a22, type: 2}
+--- !u!95 &7374647354647008798
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985150272599254488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fc9bcfcb7d567642b4e383e34c85785, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8033876053372144215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985150272599254488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18684dd8d258ab48baa167c7eef4944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pLevel: {fileID: 11400000, guid: b43726e8fa5ebeb4c8d386611c65641a, type: 2}
+  deathXP: 25
+  health: {fileID: 0}
