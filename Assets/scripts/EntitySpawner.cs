@@ -54,8 +54,8 @@ public class EntitySpawner : MonoBehaviour
     {
         RectInt roomBnds = entHandler.map.rooms[room];
         var pos = new Vector2Int(
-                Random.Range(roomBnds.x, roomBnds.max.x),
-                Random.Range(roomBnds.y, roomBnds.max.y)
+                Random.Range(roomBnds.min.x, roomBnds.max.x),
+                Random.Range(roomBnds.min.y, roomBnds.max.y)
                 );
         return pos;
     }

@@ -13,7 +13,7 @@ public class MapGen : MonoBehaviour
     public int hallway;
 
     public bool shouldDebugDrawBsp;
-    public bool showTiles,showRooms;
+    public bool showTiles, showRooms;
     public const int MIN_ROOM_DELTA = 3;
     private BspTree tree;
     private MapData mapData;
@@ -28,9 +28,9 @@ public class MapGen : MonoBehaviour
     //Clears prev map
     private void InitReferences()
     {
-        int ranSeed = Random.Range(3, 6);
-        Random.InitState(ranSeed);
-        iterations = ranSeed;
+        //int ranSeed = Random.Range(3, 6);
+        //Random.InitState(ranSeed);
+        //iterations = ranSeed;
     }
 
     //Creates Rooms inside container
@@ -65,22 +65,45 @@ public class MapGen : MonoBehaviour
             if (node.right != null) UpdateTilemap(node.right);
         }
     }
+    private void UpdateTilemapInOrder(BspTree node)
+    {
+        if (node == null)
+        {
+            return;
+        }
+        UpdateTilemapInOrder(node.left);
+        if (Mathf.Abs(node.room.max.x - node.room.min.x) == 0 || Mathf.Abs(node.room.max.y - node.room.min.y) <= 0)
+        {
 
+        }
+        else
+        {
+            mapData.rooms.Add(node.room);
+        }
+        for (int i = node.room.min.x; i < node.room.xMax; i++)
+        {
+            for (int j = node.room.min.y; j < node.room.yMax; j++)
+            {
+                mapData.tiles[i, j] = 1;
+            }
+        }
+        UpdateTilemapInOrder(node.right);
+    }
     //Fill rooms in tilemap
     private void FillRooms()
     {
-        UpdateTilemap(tree);
+        UpdateTilemapInOrder(tree);
     }
     private void SetDoors()
     {
         if (mapData.rooms.Count > 0)
         {
-            mapData.entrance = new Vector2Int(Random.Range(mapData.rooms[0].x + 1, mapData.rooms[0].max.x),
-            Random.Range(mapData.rooms[0].y + 1, mapData.rooms[0].max.y));
+            mapData.entrance = new Vector2Int(Random.Range(mapData.rooms[0].min.x, mapData.rooms[0].max.x),
+            Random.Range(mapData.rooms[0].min.y, mapData.rooms[0].max.y));
             int minExitIndex = Mathf.Max(mapData.rooms.Count - 1, minExitDistance);
             int exitIndex = mapData.rooms.Count - 1;
-            mapData.exit = new Vector2Int(Random.Range(mapData.rooms[exitIndex].x, mapData.rooms[exitIndex].max.x),
-                Random.Range(mapData.rooms[exitIndex].y, mapData.rooms[exitIndex].max.y));
+            mapData.exit = new Vector2Int(Random.Range(mapData.rooms[exitIndex].min.x, mapData.rooms[exitIndex].max.x),
+                Random.Range(mapData.rooms[exitIndex].min.y, mapData.rooms[exitIndex].max.y));
         }
         else
         {
@@ -148,7 +171,13 @@ public class MapGen : MonoBehaviour
             {
                 foreach (var item in mapData.rooms)
                 {
-                    Gizmos.DrawWireCube(Vector2.Lerp(item.position, item.max, 0.5f), (Vector2)item.size);
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawWireCube(Vector2.Lerp(item.min, item.max, 0.5f), (Vector2)item.size);
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawWireSphere((Vector2)item.min, 0.3f);
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawWireSphere((Vector2)item.max, 0.3f);
+
                 }
             }
             if (showTiles)
@@ -159,12 +188,13 @@ public class MapGen : MonoBehaviour
                     {
                         if (mapData.tiles[x, y] == 1)
                         {
+                            Gizmos.color = Color.white;
                             Gizmos.DrawWireSphere(new Vector2(x + 0.5f, y), 0.3f);
                         }
                     }
                 }
             }
-            
+
         }
     }
 }

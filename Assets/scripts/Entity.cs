@@ -31,6 +31,6 @@ public class Entity : MonoBehaviour
     {
         moveTween.Kill();
         this.position = pos;
-        transform.position = new Vector3(pos.x + 0.5f, pos.y + 1, 0);
+        transform.position = new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0);
     }
 }

@@ -48,5 +48,7 @@ public class MapRenderer : MonoBehaviour
             }
         }
         ground.SetTile((Vector3Int)data.exit + Vector3Int.down, exitTile);
+        ground.SetTile(new Vector3Int(-10, -10, 0), groundTile);
+        walls.SetTile(new Vector3Int(-11, -10, 0), wallTile);
     }
 }
