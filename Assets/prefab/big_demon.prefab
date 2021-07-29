@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3169941417673006606}
   - component: {fileID: 2906429200812236215}
   - component: {fileID: 6382072783557243039}
+  - component: {fileID: -244739189103038328}
   m_Layer: 0
   m_Name: big_demon
   m_TagString: Untagged
@@ -97,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb581dc334694eb46b4ef691fb010a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 3
+  stats: {fileID: 11400000, guid: 78d0cd8a17ebd2a4695238d9578fa2a4, type: 2}
+  _health: 5
 --- !u!114 &3169941417673006606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +154,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-244739189103038328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015447772149097926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18684dd8d258ab48baa167c7eef4944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pLevel: {fileID: 11400000, guid: b43726e8fa5ebeb4c8d386611c65641a, type: 2}
+  deathXP: 25
+  health: {fileID: 0}

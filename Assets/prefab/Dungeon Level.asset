@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc86a37edf0deb48878e8a898f84b2f, type: 3}
   m_Name: Dungeon Level
   m_EditorClassIdentifier: 
-  DefaultValue: 1
+  DefaultValue: 0
   _count: 2

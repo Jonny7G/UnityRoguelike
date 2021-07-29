@@ -8,10 +8,10 @@ public class HeartDrop : LootDrop
     public override bool ShouldDrop(EntitiesHandler entHandler)
     {
         var player = entHandler.player;
-        if (player.health.Health < player.health.defaultHealth)
+        if (player.health.Health < player.health.maxHealth)
         {
             float chance;
-            chance = Mathf.Lerp(maxChance, this.dropChance, player.health.Health / (float)player.health.defaultHealth);
+            chance = Mathf.Lerp(maxChance, this.dropChance, player.health.Health / (float)player.health.maxHealth);
             return Random.Range(0f, 1f) < chance;
         }
         else

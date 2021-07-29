@@ -7,14 +7,8 @@ public class GameManager : MonoBehaviour
     public MapGen generator;
     public EntitiesHandler entities;
     public LoadFader fader;
-    [Header("global values")]
-    [SerializeField] private Counter goldCounter,dungeonLevel;
+    public Counter dungeonLevel;
     public bool loading { get; private set; }
-    private void Awake()
-    {
-        dungeonLevel.ResetState();
-        goldCounter.ResetState();
-    }
     private void Start()
     {
         Load();

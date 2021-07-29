@@ -6,7 +6,7 @@ public class PlayerControlsHandler : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private PlayerEntityHandler player;
-    [SerializeField] private PlayerSkillsHandler skillsHandler;
+    [SerializeField] private PlayerAttackHandler attackHandler;
     [SerializeField] private EntitiesHandler entHandler;
     [SerializeField] private float initialHoldTime, continuousHoldTime;
     private Vector2Int facingDirection;
@@ -58,7 +58,7 @@ public class PlayerControlsHandler : MonoBehaviour
                     var entity = entHandler.liveEntities.GetEntity(player.entity.position + move);
                     if (entity != null)
                     {
-                        skillsHandler.Attack(facingDirection);
+                        attackHandler.Attack(entity);
                     }
                     MoveTurn();
                 }
@@ -86,7 +86,6 @@ public class PlayerControlsHandler : MonoBehaviour
     }
     private void MoveTurn()
     {
-        skillsHandler.MoveTurn();
         entHandler.MoveTurn(); //makes every active entity move their turn, important it happens after player turn.
     }
 }

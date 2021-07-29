@@ -9,7 +9,7 @@ public class EntitiesHandler : MonoBehaviour
     public EntityCollection<LiveEntity> liveEntities = new EntityCollection<LiveEntity>();
     public EntityCollection<ItemPickup> items = new EntityCollection<ItemPickup>();
     public EntityCollection<Entity> otherEntities = new EntityCollection<Entity>();
-    [SerializeField] private EntitySpawner spawner;
+    [SerializeField] private SpawnSystem spawner;
     public MapData map;
     public void MoveTurn()
     {
@@ -24,7 +24,7 @@ public class EntitiesHandler : MonoBehaviour
         this.map = map;
         player.SetPosition(map.entrance);
         liveEntities.AddEntity(player);
-        spawner.SpawnEntities(this);
+        spawner.GetSpawner().SpawnEntities(this);
         //need to subscribe to entity health ondeath event so we can remove it
     }
     public void RemoveEntities()

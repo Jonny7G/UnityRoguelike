@@ -7,6 +7,8 @@ public class PlayerEntityHandler : MonoBehaviour
     public bool animating { get; private set; }
     public HealthHandler health;
     public LiveEntity entity;
+    public PlayerLevel level;
+    public Stats playerStats;
     [SerializeField, HideInInspector] private CameraShake camShake;
     private void Awake()
     {
@@ -16,8 +18,24 @@ public class PlayerEntityHandler : MonoBehaviour
     {
         health.OnDeath += OnDeath;
         health.OnDamage += OnDamaged;
+        level.OnLevelUp += FullHeal;
+        playerStats.OnChange += UpdateHealth;
         entity.shakeMag = 0; //don't want player to shake when damaged
         entity.Show(); //don't hide the player
+    }
+    private void OnDestroy()
+    {
+        level.OnLevelUp -= FullHeal;
+        playerStats.OnChange -= UpdateHealth;
+    }
+    private void UpdateHealth()
+    {
+        FullHeal();
+        health.UpdateHealth();
+    }
+    private void FullHeal()
+    {
+        health.Heal(health.maxHealth);
     }
     private void OnDeath()
     {

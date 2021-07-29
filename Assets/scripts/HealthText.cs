@@ -9,6 +9,6 @@ public class HealthText : MonoBehaviour
     
     private void Update()
     {
-        text.SetText("Health: " + health.Health + "/" + health.defaultHealth);
+        text.SetText("Health: " + health.Health + "/" + health.maxHealth);
     }
 }

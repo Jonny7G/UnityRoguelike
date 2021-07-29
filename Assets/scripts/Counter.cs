@@ -12,8 +12,8 @@ public class Counter : Resetable
 
     public void Increment()
     {
+        count++;
         OnChange?.Invoke();
-        _count++;
     }
     public void AddValue(int value)
     {
@@ -22,7 +22,7 @@ public class Counter : Resetable
     }
     public override void ResetState()
     {
-        _count = DefaultValue;
+        count = DefaultValue;
         OnChange?.Invoke();
     }
 }
