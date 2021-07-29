@@ -13,7 +13,7 @@ public class MapGen : MonoBehaviour
     public int hallway;
 
     public bool shouldDebugDrawBsp;
-
+    public bool showTiles,showRooms;
     public const int MIN_ROOM_DELTA = 3;
     private BspTree tree;
     private MapData mapData;
@@ -28,7 +28,7 @@ public class MapGen : MonoBehaviour
     //Clears prev map
     private void InitReferences()
     {
-        Random.InitState(3);
+        //Random.InitState(3);
     }
 
     //Creates Rooms inside container
@@ -137,5 +137,32 @@ public class MapGen : MonoBehaviour
         SetDoors();
         rndr.Render(mapData);
         return mapData;
+    }
+    private void OnDrawGizmos()
+    {
+        if (mapData != null)
+        {
+            if (showRooms)
+            {
+                foreach (var item in mapData.rooms)
+                {
+                    Gizmos.DrawWireCube(Vector2.Lerp(item.position, item.max, 0.5f), (Vector2)item.size);
+                }
+            }
+            if (showTiles)
+            {
+                for (int x = 0; x < mapData.tiles.GetLength(0); x++)
+                {
+                    for (int y = 0; y < mapData.tiles.GetLength(0); y++)
+                    {
+                        if (mapData.tiles[x, y] == 1)
+                        {
+                            Gizmos.DrawWireSphere(new Vector2(x + 0.5f, y), 0.3f);
+                        }
+                    }
+                }
+            }
+            
+        }
     }
 }

@@ -41,7 +41,7 @@ public class MapRenderer : MonoBehaviour
             {
                 if (data.tiles[x, y] == 1)
                 {
-                    var pos = new Vector3Int(x, y - 1, 0);
+                    var pos = new Vector3Int(x, y, 0);
                     walls.SetTile(pos, null); //remove wall
                     ground.SetTile(pos, groundTile); //place ground tile on ground tilemap
                 }
