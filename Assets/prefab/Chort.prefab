@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb581dc334694eb46b4ef691fb010a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 5
+  _health: 2
 --- !u!114 &-8990702415246132269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +116,8 @@ MonoBehaviour:
   shakeMag: 0.3
   spawnRoom: 0
   sr: {fileID: 0}
+  damage: 1
+  chaseDist: 3
 --- !u!114 &949499382154349983
 MonoBehaviour:
   m_ObjectHideFlags: 0

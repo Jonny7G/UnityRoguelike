@@ -299,12 +299,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
+  - {fileID: -8990702415246132269, guid: 5a0f54c39b77bb848991387833ece898, type: 3}
+  - {fileID: -8990702415246132269, guid: 5a0f54c39b77bb848991387833ece898, type: 3}
+  - {fileID: -3627025025159506192, guid: 55bbe87a86b2f7744b0fb86adc3f1341, type: 3}
+  - {fileID: 3169941417673006606, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
   - {fileID: 3169941417673006606, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
   - {fileID: -3627025025159506192, guid: 55bbe87a86b2f7744b0fb86adc3f1341, type: 3}
-  - {fileID: -8990702415246132269, guid: 5a0f54c39b77bb848991387833ece898, type: 3}
-  density: 0.54
+  - {fileID: -3754668511735492034, guid: 14729500680fd1043abebd09914eba18, type: 3}
+  density: 0.62
   minEnemies: 1
-  maxEnemies: 3
+  maxEnemies: 2
+  heartAtStartDrop: {fileID: 11400000, guid: bf5b7563d7f923f49836f7634ceb76a2, type: 2}
   exitObject: {fileID: 0}
 --- !u!4 &609633318
 Transform:

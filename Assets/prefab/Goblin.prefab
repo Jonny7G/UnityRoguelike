@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb581dc334694eb46b4ef691fb010a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
+  _health: 1
 --- !u!114 &-3754668511735492034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   shakeMag: 0.3
   spawnRoom: 0
   sr: {fileID: 0}
+  damage: 0
 --- !u!114 &1161417350371311056
 MonoBehaviour:
   m_ObjectHideFlags: 0

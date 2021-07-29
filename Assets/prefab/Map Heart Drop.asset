@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2168d1db016657945a70b3fab5fec145, type: 3}
-  m_Name: PlayerBasicAttack
+  m_Script: {fileID: 11500000, guid: a1785f3caecc92548bdd171d38e95f74, type: 3}
+  m_Name: Map Heart Drop
   m_EditorClassIdentifier: 
-  skillName: Basic Attack
-  skillDescription: The default attack.
-  minDamage: 2
-  maxDamage: 5
+  dropChance: 0.1
+  item: {fileID: 3986616698130193094, guid: c7792e3ef1e88c948be40dfc90cafc79, type: 3}
+  maxChance: 0.772

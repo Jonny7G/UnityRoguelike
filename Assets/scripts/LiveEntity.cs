@@ -68,7 +68,7 @@ public class LiveEntity : Entity
     }
     protected void DoShake()
     {
-        if (damagedOnTurn)
+        if (damagedOnTurn && !moveTween.IsActive())
         {
             moveTween = transform.DOShakePosition(0.2f, shakeMag, 30, 90, false, false);
             damagedOnTurn = false;

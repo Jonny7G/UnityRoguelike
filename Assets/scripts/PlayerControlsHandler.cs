@@ -11,6 +11,7 @@ public class PlayerControlsHandler : MonoBehaviour
     [SerializeField] private float initialHoldTime, continuousHoldTime;
     private Vector2Int facingDirection;
     private Timer holdMoveTime;
+
     private void Update()
     {
         if (!gameManager.loading)
@@ -33,14 +34,17 @@ public class PlayerControlsHandler : MonoBehaviour
             {
                 move.y = -1;
             }
-            if (Input.GetKeyDown(KeyCode.R)) //DETH
+            if (Input.GetKeyDown(KeyCode.R)) //quick restart
             {
                 player.health.Damage(1000);
             }
-            if (Input.GetKeyDown(KeyCode.Y)) //test damage
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.Y)) //cheat while testing in editor
             {
-                player.health.Damage(1);
+                player.health.Heal(100);
             }
+#endif
             bool moved = move.magnitude > 0;
             facingDirection = move;
             if (moved)

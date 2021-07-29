@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3986616698130193144}
   - component: {fileID: 3986616698130193094}
   m_Layer: 0
-  m_Name: ui_heart_full
+  m_Name: heart pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,6 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entHandler: {fileID: 0}
-  healAmount: 1
+  healAmount: 3
   minChance: 0.114
   maxChance: 0.64

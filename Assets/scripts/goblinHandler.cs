@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class goblinHandler : Enemy
 {
+    [SerializeField] private int damage;
     public override void TakeTurn()
     {
         base.TakeTurn();
@@ -26,7 +27,7 @@ public class goblinHandler : Enemy
                     if (entity == entHandler.player)
                     {
                         DoAttack(position + move);
-                        entHandler.player.health.Damage(1);
+                        entHandler.player.health.Damage(damage);
                     }
                 }
             }
@@ -56,7 +57,7 @@ public class goblinHandler : Enemy
                         if (entity == entHandler.player)
                         {
                             DoAttack(position + move);
-                            entHandler.player.health.Damage(1);
+                            entHandler.player.health.Damage(damage);
                         }
                     }
                 }
