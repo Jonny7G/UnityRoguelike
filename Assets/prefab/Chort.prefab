@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8346973426485358104}
   - component: {fileID: -8990702415246132269}
   - component: {fileID: 949499382154349983}
+  - component: {fileID: 7374647354647008798}
   m_Layer: 0
   m_Name: Chort
   m_TagString: Untagged
@@ -130,3 +131,22 @@ MonoBehaviour:
   lootDrops:
   - {fileID: 11400000, guid: 94aee39210907b7408c07a973f3a7c06, type: 2}
   - {fileID: 11400000, guid: 1460bf7cd750ace49a701882f8942a22, type: 2}
+--- !u!95 &7374647354647008798
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8985150272599254488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fc9bcfcb7d567642b4e383e34c85785, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

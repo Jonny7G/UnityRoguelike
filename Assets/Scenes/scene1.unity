@@ -152,6 +152,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generator: {fileID: 2084651240}
   entities: {fileID: 1978022140}
+  fader: {fileID: 0}
+  goldCounter: {fileID: 0}
+  dungeonLevel: {fileID: 0}
 --- !u!4 &357299771
 Transform:
   m_ObjectHideFlags: 0
@@ -268,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36475b3775860340af87a164e935a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2141648627}
+  target: {fileID: 0}
 --- !u!1 &804991639
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +305,7 @@ MonoBehaviour:
   - {fileID: 3169941417673006606, guid: 1b8aea49f94a7c54fa02e12c17bcbfe1, type: 3}
   - {fileID: -3627025025159506192, guid: 55bbe87a86b2f7744b0fb86adc3f1341, type: 3}
   - {fileID: -8990702415246132269, guid: 5a0f54c39b77bb848991387833ece898, type: 3}
+  - {fileID: -3754668511735492034, guid: 14729500680fd1043abebd09914eba18, type: 3}
   density: 0.54
   minEnemies: 1
   maxEnemies: 3
@@ -814,10 +818,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bc4dfbb57234d44a7bc611adc13fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2141648629}
+  gameManager: {fileID: 0}
+  player: {fileID: 0}
   skillsHandler: {fileID: 1633389434}
   entHandler: {fileID: 1978022140}
-  facingDirection: {x: 0, y: 0}
+  initialHoldTime: 0
+  continuousHoldTime: 0
 --- !u!114 &1633389434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +850,7 @@ MonoBehaviour:
     cooldown: 0
     _currentCooldown: 0
   inactiveSkills: []
-  player: {fileID: 2141648629}
+  player: {fileID: 0}
   defaultAttack: {fileID: 11400000, guid: 342c99c42691df34eade42e61a1220af, type: 2}
 --- !u!1 &1978022138
 GameObject:
@@ -1070,3 +1076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entHandler: {fileID: 1978022140}
   health: {fileID: 2141648628}
+  dropHandler: {fileID: 0}
+  shakeMag: 0.3
+  spawnRoom: 0
+  sr: {fileID: 0}

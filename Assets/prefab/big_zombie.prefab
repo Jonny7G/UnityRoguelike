@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8047624466770452991}
   - component: {fileID: -3627025025159506192}
   - component: {fileID: 3680992588149966275}
+  - component: {fileID: 7715150903981407718}
   m_Layer: 0
   m_Name: big_zombie
   m_TagString: Untagged
@@ -130,3 +131,22 @@ MonoBehaviour:
   lootDrops:
   - {fileID: 11400000, guid: 94aee39210907b7408c07a973f3a7c06, type: 2}
   - {fileID: 11400000, guid: 1460bf7cd750ace49a701882f8942a22, type: 2}
+--- !u!95 &7715150903981407718
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875053994850767188}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f801fcf13ff0a949b8688ff5a29a7c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

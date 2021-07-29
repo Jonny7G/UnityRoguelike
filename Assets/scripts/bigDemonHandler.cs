@@ -11,20 +11,22 @@ public class bigDemonHandler : Enemy
         {
             Vector2Int move = new Vector2Int(0, 0);
 
-            int rand_num = Random.Range(0, 4);
-
-            if (rand_num < 1) { move.y = -1; }
-            if (rand_num >= 1 && rand_num < 2) { move.y = 1; }
-            if (rand_num >= 3) { move.x = -1; }
-            if (rand_num >= 2 && rand_num < 3) { move.x = 1; }
-
-            Vector2Int test = new Vector2Int(0, 0);
-            test.y = (int)gameObject.transform.position.y;
-            test.x = (int)gameObject.transform.position.x;
-
-            if (AttemptMove(test + move))
+            for (int i = 0; i < 2; i++)
             {
-                AttemptMove(test + move);
+                int rand_num = Random.Range(0, 4);
+
+                if (rand_num < 1) { move.y = -1; }
+                if (rand_num >= 1 && rand_num < 2) { move.y = 1; }
+                if (rand_num >= 3) { move.x = -1; }
+                if (rand_num >= 2 && rand_num < 3) { move.x = 1; }
+
+                AttemptMove(position + move);
+
+                if ((Mathf.Abs(entHandler.player.position.y - position.y) + Mathf.Abs(entHandler.player.position.y - position.x)) <= 2)
+                {
+                    entHandler.player.health.Damage(2);
+                }
+                
             }
         }
     }
