@@ -97,4 +97,4 @@ MonoBehaviour:
   entHandler: {fileID: 0}
   healAmount: 3
   minChance: 0.114
-  maxChance: 0.64
+  maxChance: 0.449

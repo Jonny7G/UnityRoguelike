@@ -7,6 +7,7 @@ public class BigZombieHandler : Enemy
     [SerializeField] private int damage;
     [SerializeField] private int chaseDist;
     bool MovedLast = false;
+    bool attackedLast = false;
     public override void TakeTurn()
     {
         base.TakeTurn();
@@ -16,7 +17,15 @@ public class BigZombieHandler : Enemy
             float dist = Vector2.Distance(position, entHandler.player.position);
             if (IsPlayerAdjacent())
             {
-                entHandler.player.health.Damage(damage);
+                if (!attackedLast)
+                {
+                    entHandler.player.health.Damage(damage);
+                    attackedLast = true;
+                }
+                else
+                {
+                    attackedLast = false;
+                }
             }
             else if (dist < chaseDist && dist > 1.5f)
             {
@@ -47,7 +56,15 @@ public class BigZombieHandler : Enemy
                         if (entity == entHandler.player)
                         {
                             DoAttack(move);
-                            entHandler.player.health.Damage(damage);
+                            if (!attackedLast)
+                            {
+                                entHandler.player.health.Damage(damage);
+                                attackedLast = true;
+                            }
+                            else
+                            {
+                                attackedLast = false;
+                            }
                         }
                     }
                 }

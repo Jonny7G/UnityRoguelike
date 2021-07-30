@@ -13,9 +13,11 @@ public class MapGen : MonoBehaviour
     public int hallway;
 
     public bool shouldDebugDrawBsp;
-    public bool showTiles, showRooms;
+    public bool showTiles, showRooms, showContainers, showHall;
     public const int MIN_ROOM_DELTA = 3;
     private BspTree tree;
+    private List<RectInt> containers = new List<RectInt>();
+    private List<Vector2> hallways = new List<Vector2>();
     private MapData mapData;
     [SerializeField] private MapRenderer rndr;
     void Start()
@@ -28,9 +30,6 @@ public class MapGen : MonoBehaviour
     //Clears prev map
     private void InitReferences()
     {
-        //int ranSeed = Random.Range(3, 6);
-        //Random.InitState(ranSeed);
-        //iterations = ranSeed;
     }
 
     //Creates Rooms inside container
@@ -113,9 +112,43 @@ public class MapGen : MonoBehaviour
     //Create hallways
     private void GenerateHallway()
     {
-        GenerateHallwayNode(tree);
+        //GenerateHallwayNode(tree);
+        GenerateHallwayNodeBetter(tree);
     }
-
+    private void GenerateHallwayNodeBetter(BspTree node)
+    {
+        if (node.what_is_internal())
+        {
+            RectInt leftContainer = node.left.container;
+            RectInt rightContainer = node.right.container;
+            Vector2Int leftCenter = new Vector2Int(Mathf.CeilToInt(leftContainer.center.x), Mathf.CeilToInt(leftContainer.center.y));
+            Vector2Int rightCenter = new Vector2Int(Mathf.CeilToInt(rightContainer.center.x), Mathf.CeilToInt(rightContainer.center.y));
+            Vector2 direction = (rightCenter - (Vector2)leftCenter).normalized;
+            while (leftCenter!=rightCenter)
+            {
+                if (direction.Equals(Vector2.right))
+                {
+                    for (int i = 0; i < hallway; i++)
+                    {
+                        hallways.Add(new Vector2((int)leftCenter.x, (int)leftCenter.y + i));
+                        mapData.tiles[(int)leftCenter.x, (int)leftCenter.y + i] = 1;
+                    }
+                }
+                else if (direction.Equals(Vector2.up))
+                {
+                    for (int i = 0; i < hallway; i++)
+                    {
+                        hallways.Add(new Vector2((int)leftCenter.x + i, (int)leftCenter.y));
+                        mapData.tiles[(int)leftCenter.x + i, (int)leftCenter.y] = 1;
+                    }
+                }
+                leftCenter.x += (int)direction.x;
+                leftCenter.y += (int)direction.y;
+            }
+            if (node.left != null) GenerateHallwayNodeBetter(node.left);
+            if (node.right != null) GenerateHallwayNodeBetter(node.right);
+        }
+    }
     //Create spawn point for hallway
     private void GenerateHallwayNode(BspTree node)
     {
@@ -126,12 +159,13 @@ public class MapGen : MonoBehaviour
             Vector2 leftCenter = leftContainer.center;
             Vector2 rightCenter = rightContainer.center;
             Vector2 direction = (rightCenter - leftCenter).normalized;
-            while (Vector2.Distance(leftCenter, rightCenter) > 1)
+            while (Vector2.Distance(leftCenter, rightCenter) >= 1)
             {
                 if (direction.Equals(Vector2.right))
                 {
                     for (int i = 0; i < hallway; i++)
                     {
+                        hallways.Add(new Vector2((int)leftCenter.x, (int)leftCenter.y + i));
                         mapData.tiles[(int)leftCenter.x, (int)leftCenter.y + i] = 1;
                     }
                 }
@@ -139,6 +173,7 @@ public class MapGen : MonoBehaviour
                 {
                     for (int i = 0; i < hallway; i++)
                     {
+                        hallways.Add(new Vector2((int)leftCenter.x + i, (int)leftCenter.y));
                         mapData.tiles[(int)leftCenter.x + i, (int)leftCenter.y] = 1;
                     }
                 }
@@ -153,15 +188,26 @@ public class MapGen : MonoBehaviour
     public MapData GenerateMap()
     {
         mapData = new MapData();
-        mapData.tiles = new int[mapSize, mapSize];
+        mapData.tiles = new int[mapSize + 1, mapSize + 1];
         InitReferences();
         GenerateContainer();
+        conters(tree);
         GenerateRooms();
         GenerateHallway();
         FillRooms();
         SetDoors();
         rndr.Render(mapData);
         return mapData;
+    }
+    private void conters(BspTree tree)
+    {
+        if (tree == null)
+        {
+            return;
+        }
+        conters(tree.left);
+        containers.Add(tree.container);
+        conters(tree.right);
     }
     private void OnDrawGizmos()
     {
@@ -177,7 +223,8 @@ public class MapGen : MonoBehaviour
                     Gizmos.DrawWireSphere((Vector2)item.min, 0.3f);
                     Gizmos.color = Color.blue;
                     Gizmos.DrawWireSphere((Vector2)item.max, 0.3f);
-
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawWireSphere((Vector2)item.center, 0.3f);
                 }
             }
             if (showTiles)
@@ -194,7 +241,26 @@ public class MapGen : MonoBehaviour
                     }
                 }
             }
-
+            if (showContainers)
+            {
+                foreach (var item in containers)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawWireCube(Vector2.Lerp(item.min, item.max, 0.5f), (Vector2)item.size);
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawWireSphere((Vector2)item.min, 0.3f);
+                    Gizmos.color = Color.cyan;
+                    Gizmos.DrawWireSphere((Vector2)item.max, 0.3f);
+                }
+            }
+            if (showHall)
+            {
+                foreach (var hPos in hallways)
+                {
+                    Gizmos.color = Color.white;
+                    Gizmos.DrawWireSphere(hPos + new Vector2(0.5f, 0.5f), 0.3f);
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ public class ChortHandler : Enemy
 {
     [SerializeField] private int damage;
     [SerializeField] private float chaseDist;
+    private bool attackedLast;
     public override void TakeTurn()
     {
         base.TakeTurn();
@@ -15,7 +16,15 @@ public class ChortHandler : Enemy
             
             if (IsPlayerAdjacent())
             {
-                entHandler.player.health.Damage(damage);
+                if (!attackedLast)
+                {
+                    entHandler.player.health.Damage(damage);
+                    attackedLast = true;
+                }
+                else
+                {
+                    attackedLast = false;
+                }
             }
             else if (dist < chaseDist && dist > 1.5f)
             {
@@ -43,7 +52,15 @@ public class ChortHandler : Enemy
                     if (entity == entHandler.player)
                     {
                         DoAttack(move);
-                        entHandler.player.health.Damage(damage);
+                        if (!attackedLast)
+                        {
+                            entHandler.player.health.Damage(damage);
+                            attackedLast = true;
+                        }
+                        else
+                        {
+                            attackedLast = false;
+                        }
                     }
                 }
             }

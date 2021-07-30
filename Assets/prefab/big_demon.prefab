@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 78d0cd8a17ebd2a4695238d9578fa2a4, type: 2}
-  _health: 5
+  _health: 6
 --- !u!114 &3169941417673006606
 MonoBehaviour:
   m_ObjectHideFlags: 0
